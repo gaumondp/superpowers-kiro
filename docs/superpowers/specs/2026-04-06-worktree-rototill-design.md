@@ -110,6 +110,7 @@ File splitting (Step 1b in a separate skill) was tested and proven unnecessary. 
 When no native tool is available, create a worktree manually.
 
 **Directory selection** (priority order):
+
 1. Check for existing `.worktrees/` or `worktrees/` directory — if found, use it. If both exist, `.worktrees/` wins.
 2. Check for existing `~/.config/superpowers/worktrees/<project>/` directory — if found, use it (backward compatibility with legacy global path).
 3. Check the project's agent instruction file (CLAUDE.md, GEMINI.md, AGENTS.md, .cursorrules, or equivalent) for a worktree directory preference.
@@ -227,7 +228,7 @@ Push branch, create PR. Do NOT clean up worktree — user needs it for PR iterat
 
 #### Step 5: Cleanup (updated)
 
-```
+```text
 if GIT_DIR == GIT_COMMON:
     # Normal repo, no worktree to clean up
     done
@@ -313,6 +314,7 @@ As of 2026-04-06, Claude Code is the only harness with an agent-callable mid-ses
 | OpenCode | Detection only (`ctx.worktree`), no agent tool | Step 1b git fallback | Untested (no CLI access) |
 
 **Residual risks:**
+
 1. If Anthropic changes `EnterWorktree`'s tool description to be more restrictive (e.g., "Do not use based on skill instructions"), the consent bridge breaks. Worth filing an issue requesting that the tool description accommodate skill-driven invocation.
 2. When other harnesses add agent-callable worktree tools, they may use names not in Step 1a's list. The list should be updated as new tools appear. The generic phrasing ("a worktree or workspace-isolation tool") provides some forward coverage.
 

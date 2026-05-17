@@ -32,6 +32,7 @@
 ### Task 1: Implement WebSocket protocol exports
 
 **Files:**
+
 - Create: `skills/brainstorming/scripts/server.js`
 - Test: `tests/brainstorm-server/ws-protocol.test.js` (already exists)
 
@@ -51,6 +52,7 @@ function computeAcceptKey(clientKey) {
 - [ ] **Step 2: Implement encodeFrame**
 
 Server frames are never masked. Three length encodings:
+
 - payload < 126: 2-byte header (FIN+opcode, length)
 - 126-65535: 4-byte header (FIN+opcode, 126, 16-bit length)
 - &gt; 65535: 10-byte header (FIN+opcode, 127, 64-bit length)
@@ -148,6 +150,7 @@ git commit -m "Add WebSocket protocol layer for zero-dep brainstorm server"
 ### Task 2: Add HTTP server, file watching, and WebSocket connection handling
 
 **Files:**
+
 - Modify: `skills/brainstorming/scripts/server.js`
 - Test: `tests/brainstorm-server/server.test.js` (already exists)
 
@@ -405,6 +408,7 @@ git commit -m "Add HTTP server, WebSocket handling, and file watching to server.
 ### Task 3: Update start-server.sh and remove old files
 
 **Files:**
+
 - Modify: `skills/brainstorming/scripts/start-server.sh:94,100`
 - Modify: `.gitignore:6`
 - Delete: `skills/brainstorming/scripts/index.js`
@@ -456,7 +460,7 @@ BRAINSTORM_DIR=/tmp/brainstorm-smoke BRAINSTORM_PORT=9876 node server.js
 
 Expected: `server-started` JSON printed with port 9876
 
-- [ ] **Step 2: Open browser to http://localhost:9876**
+- [ ] **Step 2: Open browser to <http://localhost:9876>**
 
 Expected: Waiting page with "Waiting for Claude to push a screen..."
 

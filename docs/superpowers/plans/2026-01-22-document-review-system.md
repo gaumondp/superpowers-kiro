@@ -19,6 +19,7 @@ This chunk adds the spec document reviewer to the brainstorming skill.
 ### Task 1: Create Spec Document Reviewer Prompt Template
 
 **Files:**
+
 - Create: `skills/brainstorming/spec-document-reviewer-prompt.md`
 
 - [ ] **Step 1:** Create the reviewer prompt template file
@@ -33,6 +34,7 @@ Use this template when dispatching a spec document reviewer subagent.
 **Dispatch after:** Spec document is written to docs/superpowers/specs/
 
 ```
+
 Task tool (general-purpose):
   description: "Review spec document"
   prompt: |
@@ -68,7 +70,8 @@ Task tool (general-purpose):
 
     **Recommendations (advisory):**
     - [suggestions that don't block approval]
-```
+
+```text
 
 **Reviewer returns:** Status, Issues (if any), Recommendations
 ```
@@ -90,6 +93,7 @@ git commit -m "feat: add spec document reviewer prompt template"
 ### Task 2: Add Review Loop to Brainstorming Skill
 
 **Files:**
+
 - Modify: `skills/brainstorming/SKILL.md`
 
 - [ ] **Step 1:** Read the current brainstorming skill
@@ -137,6 +141,7 @@ This chunk adds the plan document reviewer to the writing-plans skill.
 ### Task 3: Create Plan Document Reviewer Prompt Template
 
 **Files:**
+
 - Create: `skills/writing-plans/plan-document-reviewer-prompt.md`
 
 - [ ] **Step 1:** Create the reviewer prompt template file
@@ -151,6 +156,7 @@ Use this template when dispatching a plan document reviewer subagent.
 **Dispatch after:** Each plan chunk is written
 
 ```
+
 Task tool (general-purpose):
   description: "Review plan chunk N"
   prompt: |
@@ -188,7 +194,8 @@ Task tool (general-purpose):
 
     **Recommendations (advisory):**
     - [suggestions that don't block approval]
-```
+
+```text
 
 **Reviewer returns:** Status, Issues (if any), Recommendations
 ```
@@ -210,6 +217,7 @@ git commit -m "feat: add plan document reviewer prompt template"
 ### Task 4: Add Review Loop to Writing-Plans Skill
 
 **Files:**
+
 - Modify: `skills/writing-plans/SKILL.md`
 
 - [ ] **Step 1:** Read current skill file
@@ -274,6 +282,7 @@ This chunk updates the plan document header template to reference the new checkb
 ### Task 5: Update Plan Header Template in Writing-Plans Skill
 
 **Files:**
+
 - Modify: `skills/writing-plans/SKILL.md`
 
 - [ ] **Step 1:** Read current plan header template

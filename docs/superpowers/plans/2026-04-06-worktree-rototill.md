@@ -1,5 +1,9 @@
 # Worktree Rototill Implementation Plan
 
+<!-- markdownlint-disable MD001 -->
+<!-- This plan uses H1 for major sections and H3 for tasks intentionally;
+     skipping H2 keeps task numbering uniform across embedded skill rewrites. -->
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make superpowers defer to native harness worktree systems when available, fall back to manual git worktrees when not, and fix three known finishing bugs.
@@ -17,6 +21,7 @@
 Step 1a is the load-bearing assumption of the entire design. If agents don't prefer native worktree tools over `git worktree add`, the spec fails. Validate this FIRST, before touching any skill files.
 
 **Files:**
+
 - Create: `tests/claude-code/test-worktree-native-preference.sh`
 - Read: `skills/using-git-worktrees/SKILL.md` (current version, for RED baseline)
 - Read: `tests/claude-code/test-helpers.sh` (for `run_claude`, `assert_contains`, etc.)
@@ -202,6 +207,7 @@ git worktree add on Claude Code. Must pass before skill rewrite."
 Full rewrite of the creation skill. Replaces the existing file entirely.
 
 **Files:**
+
 - Modify: `skills/using-git-worktrees/SKILL.md` (full rewrite, 219 lines → ~210 lines)
 
 **Depends on:** Task 1 GREEN passing.
@@ -246,6 +252,7 @@ git rev-parse --show-superproject-working-tree 2>/dev/null
 **If `GIT_DIR != GIT_COMMON` (and not a submodule):** You are already in a linked worktree. Skip to Step 3 (Project Setup). Do NOT create another worktree.
 
 Report with branch state:
+
 - On a branch: "Already in isolated workspace at `<path>` on branch `<name>`."
 - Detached HEAD: "Already in isolated workspace at `<path>` (detached HEAD, externally managed). Branch creation needed at finish time."
 
@@ -276,17 +283,21 @@ If no native tool is available, create a worktree manually using git.
 Follow this priority order:
 
 1. **Check existing directories:**
+
    ```bash
    ls -d .worktrees 2>/dev/null     # Preferred (hidden)
    ls -d worktrees 2>/dev/null      # Alternative
    ```
+
    If found, use that directory. If both exist, `.worktrees` wins.
 
 2. **Check for existing global directory:**
+
    ```bash
    project=$(basename "$(git rev-parse --show-toplevel)")
    ls -d ~/.config/superpowers/worktrees/$project 2>/dev/null
    ```
+
    If found, use it (backward compatibility with legacy global path).
 
 3. **Check your instructions for a worktree directory preference.** If specified, use it without asking.
@@ -369,7 +380,7 @@ npm test / cargo test / pytest / go test ./...
 
 ### Report
 
-```
+```text
 Worktree ready at <full-path>
 Tests passing (<N> tests, 0 failures)
 Ready to implement <feature-name>
@@ -423,6 +434,7 @@ Ready to implement <feature-name>
 ## Red Flags
 
 **Never:**
+
 - Create a worktree when Step 0 detects existing isolation
 - Use git commands when a native worktree tool is available
 - Create worktree without verifying it's ignored (project-local)
@@ -430,6 +442,7 @@ Ready to implement <feature-name>
 - Proceed with failing tests without asking
 
 **Always:**
+
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
@@ -441,13 +454,16 @@ Ready to implement <feature-name>
 ## Integration
 
 **Called by:**
+
 - **subagent-driven-development** - Ensures isolated workspace (creates one or verifies existing)
 - **executing-plans** - Ensures isolated workspace (creates one or verifies existing)
 - Any skill needing isolated workspace
 
 **Pairs with:**
+
 - **finishing-a-development-branch** - REQUIRED for cleanup after work complete
-```
+
+```text
 
 - [ ] **Step 2: Verify the file reads correctly**
 
@@ -476,6 +492,7 @@ Platform-neutral instruction file references (#1049)"
 Full rewrite of the finishing skill. Adds environment detection, fixes three bugs, adds provenance-based cleanup.
 
 **Files:**
+
 - Modify: `skills/finishing-a-development-branch/SKILL.md` (full rewrite, 201 lines → ~220 lines)
 
 - [ ] **Step 1: Write the complete new SKILL.md**
@@ -510,7 +527,8 @@ npm test / cargo test / pytest / go test ./...
 ```
 
 **If tests fail:**
-```
+
+```text
 Tests failing (<N> failures). Must fix before completing:
 
 [Show failures]
@@ -552,7 +570,7 @@ Or ask: "This branch split from main - is that correct?"
 
 **Normal repo and named-branch worktree — present exactly these 4 options:**
 
-```
+```text
 Implementation complete. What would you like to do?
 
 1. Merge back to <base-branch> locally
@@ -565,7 +583,7 @@ Which option?
 
 **Detached HEAD — present exactly these 3 options:**
 
-```
+```text
 Implementation complete. You're on a detached HEAD (externally managed workspace).
 
 1. Push as new branch and create a Pull Request
@@ -629,7 +647,8 @@ Report: "Keeping branch <name>. Worktree preserved at <path>."
 #### Option 4: Discard
 
 **Confirm first:**
-```
+
+```text
 This will permanently delete:
 - Branch <name>
 - All commits: <commit-list>
@@ -641,12 +660,14 @@ Type 'discard' to confirm.
 Wait for exact confirmation.
 
 If confirmed:
+
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 ```
 
 Then: Cleanup worktree (Step 6), then force-delete branch:
+
 ```bash
 git branch -D <feature-branch>
 ```
@@ -685,37 +706,45 @@ git worktree prune  # Self-healing: clean up any stale registrations
 
 ## Common Mistakes
 
-**Skipping test verification**
+### Skipping test verification
+
 - **Problem:** Merge broken code, create failing PR
 - **Fix:** Always verify tests before offering options
 
-**Open-ended questions**
+### Open-ended questions
+
 - **Problem:** "What should I do next?" is ambiguous
 - **Fix:** Present exactly 4 structured options (or 3 for detached HEAD)
 
-**Cleaning up worktree for Option 2**
+### Cleaning up worktree for Option 2
+
 - **Problem:** Remove worktree user needs for PR iteration
 - **Fix:** Only cleanup for Options 1 and 4
 
-**Deleting branch before removing worktree**
+### Deleting branch before removing worktree
+
 - **Problem:** `git branch -d` fails because worktree still references the branch
 - **Fix:** Merge first, remove worktree, then delete branch
 
-**Running git worktree remove from inside the worktree**
+### Running git worktree remove from inside the worktree
+
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
 - **Fix:** Always `cd` to main repo root before `git worktree remove`
 
-**Cleaning up harness-owned worktrees**
+### Cleaning up harness-owned worktrees
+
 - **Problem:** Removing a worktree the harness created causes phantom state
 - **Fix:** Only clean up worktrees under `.worktrees/` or `~/.config/superpowers/worktrees/`
 
-**No confirmation for discard**
+### No confirmation for discard
+
 - **Problem:** Accidentally delete work
 - **Fix:** Require typed "discard" confirmation
 
 ## Red Flags
 
 **Never:**
+
 - Proceed with failing tests
 - Merge without verifying tests on result
 - Delete work without confirmation
@@ -725,6 +754,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Run `git worktree remove` from inside the worktree
 
 **Always:**
+
 - Verify tests before offering options
 - Detect environment before presenting menu
 - Present exactly 4 options (or 3 for detached HEAD)
@@ -736,12 +766,15 @@ git worktree prune  # Self-healing: clean up any stale registrations
 ## Integration
 
 **Called by:**
+
 - **subagent-driven-development** (Step 7) - After all tasks complete
 - **executing-plans** (Step 5) - After all batches complete
 
 **Pairs with:**
+
 - **using-git-worktrees** - Cleans up worktree created by that skill
-```
+
+```text
 
 - [ ] **Step 2: Verify the file reads correctly**
 
@@ -771,6 +804,7 @@ Stale worktree pruning after removal (git worktree prune)"
 One-line changes to three files that reference `using-git-worktrees`.
 
 **Files:**
+
 - Modify: `skills/executing-plans/SKILL.md:68`
 - Modify: `skills/subagent-driven-development/SKILL.md:268`
 - Modify: `skills/writing-plans/SKILL.md:16`
@@ -835,6 +869,7 @@ Fix stale 'created by brainstorming' claim in writing-plans."
 Verify the full rewritten skills work together. Run the existing test suite plus manual verification.
 
 **Files:**
+
 - Read: `tests/claude-code/run-skill-tests.sh`
 - Read: `skills/using-git-worktrees/SKILL.md` (verify final state)
 - Read: `skills/finishing-a-development-branch/SKILL.md` (verify final state)

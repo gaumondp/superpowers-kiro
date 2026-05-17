@@ -43,7 +43,7 @@ Then follow the installation steps above.
 
 Use OpenCode's native `skill` tool:
 
-```
+```text
 use skill tool to list skills
 use skill tool to load superpowers/brainstorming
 ```
@@ -99,6 +99,7 @@ Then use the installed package path in `opencode.json`:
 ### Tool mapping
 
 When skills reference Claude Code tools:
+
 - `TodoWrite` → `todowrite`
 - `Task` with subagents → `@mention` syntax
 - `Skill` tool → OpenCode's native `skill` tool
@@ -106,5 +107,5 @@ When skills reference Claude Code tools:
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/superpowers/issues
-- Full documentation: https://github.com/obra/superpowers/blob/main/docs/README.opencode.md
+- Report issues: <https://github.com/obra/superpowers/issues>
+- Full documentation: <https://github.com/obra/superpowers/blob/main/docs/README.opencode.md>

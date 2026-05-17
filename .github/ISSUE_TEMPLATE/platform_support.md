@@ -4,6 +4,8 @@ about: Request support for a new IDE, editor, or AI coding tool
 labels: platform-support
 ---
 
+# Platform Support Request
+
 <!--
 BEFORE FILING: Search existing issues — your IDE may already be
 requested or discussed.

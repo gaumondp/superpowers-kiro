@@ -1,0 +1,33 @@
+{
+  "default": true,
+  "MD013": false,
+  "MD024": false,
+  "MD033": {
+    "allowed_elements": [
+      "After",
+      "Bad",
+      "Before",
+      "br",
+      "Card",
+      "CardGroup",
+      "details",
+      "EXTREMELY-IMPORTANT",
+      "Good",
+      "HARD-GATE",
+      "img",
+      "kbd",
+      "name",
+      "Note",
+      "path",
+      "port",
+      "service-pattern",
+      "SUBAGENT-STOP",
+      "summary",
+      "Tip",
+      "Warning"
+    ]
+  },
+  "MD041": true,
+  "MD046": false,
+  "MD060": false
+}

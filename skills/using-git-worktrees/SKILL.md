@@ -33,6 +33,7 @@ git rev-parse --show-superproject-working-tree 2>/dev/null
 **If `GIT_DIR != GIT_COMMON` (and not a submodule):** You are already in a linked worktree. Skip to Step 3 (Project Setup). Do NOT create another worktree.
 
 Report with branch state:
+
 - On a branch: "Already in isolated workspace at `<path>` on branch `<name>`."
 - Detached HEAD: "Already in isolated workspace at `<path>` (detached HEAD, externally managed). Branch creation needed at finish time."
 
@@ -67,17 +68,21 @@ Follow this priority order. Explicit user preference always beats observed files
 1. **Check your instructions for a declared worktree directory preference.** If the user has already specified one, use it without asking.
 
 2. **Check for an existing project-local worktree directory:**
+
    ```bash
    ls -d .worktrees 2>/dev/null     # Preferred (hidden)
    ls -d worktrees 2>/dev/null      # Alternative
    ```
+
    If found, use it. If both exist, `.worktrees` wins.
 
 3. **Check for an existing global directory:**
+
    ```bash
    project=$(basename "$(git rev-parse --show-toplevel)")
    ls -d ~/.config/superpowers/worktrees/$project 2>/dev/null
    ```
+
    If found, use it (backward compatibility with legacy global path).
 
 4. **If there is no other guidance available**, default to `.worktrees/` at the project root.
@@ -145,7 +150,7 @@ npm test / cargo test / pytest / go test ./...
 
 ### Report
 
-```
+```text
 Worktree ready at <full-path>
 Tests passing (<N> tests, 0 failures)
 Ready to implement <feature-name>
@@ -199,6 +204,7 @@ Ready to implement <feature-name>
 ## Red Flags
 
 **Never:**
+
 - Create a worktree when Step 0 detects existing isolation
 - Use `git worktree add` when you have a native worktree tool (e.g., `EnterWorktree`). This is the #1 mistake — if you have it, use it.
 - Skip Step 1a by jumping straight to Step 1b's git commands
@@ -207,6 +213,7 @@ Ready to implement <feature-name>
 - Proceed with failing tests without asking
 
 **Always:**
+
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > global legacy > instruction file > default

@@ -3,6 +3,7 @@
 There are two ways to install: a one-line script (recommended) or fully manual.
 
 The script exists because Kiro's "Add Custom Power" panel currently can't install this power. It fails when:
+
 - the branch contains a slash (e.g., `feat/kiro-support`)
 - the power lives in a subdirectory (`.kiro-power/`)
 

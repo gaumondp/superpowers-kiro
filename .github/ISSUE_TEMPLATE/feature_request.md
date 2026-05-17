@@ -4,6 +4,8 @@ about: Propose a change or addition to Superpowers
 labels: enhancement
 ---
 
+# Feature Request
+
 <!--
 BEFORE FILING: Search open AND closed issues. Many features have been
 requested before — some were implemented differently, some are in

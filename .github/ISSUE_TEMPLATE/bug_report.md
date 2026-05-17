@@ -4,6 +4,8 @@ about: Something isn't working as expected
 labels: bug
 ---
 
+# Bug Report
+
 <!--
 BEFORE FILING: Search open AND closed issues. The Windows SessionStart
 hook alone has been reported 29 times. If your issue already exists,
@@ -36,6 +38,7 @@ add a comment or reaction to the existing one instead.
 <!-- Be specific. "It doesn't work" is not a bug report. -->
 
 ## Steps to reproduce
+
 1.
 2.
 3.

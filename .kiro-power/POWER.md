@@ -29,6 +29,7 @@ ls ~/.kiro/skills/brainstorming/SKILL.md 2>/dev/null
 If the skills are not yet installed, copy each skill directory into `~/.kiro/skills/`. Kiro requires skills to be directly under the skills directory (no nesting).
 
 **macOS / Linux:**
+
 ```bash
 mkdir -p ~/.kiro/skills
 for skill in <path-to-superpowers-repo>/skills/*/; do
@@ -39,6 +40,7 @@ done
 Where `<path-to-superpowers-repo>` is the parent directory of `.kiro-power/` (the root of this repository).
 
 **Windows (PowerShell):**
+
 ```powershell
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.kiro\skills"
 Get-ChildItem "<path-to-superpowers-repo>\skills" -Directory | ForEach-Object {
@@ -75,7 +77,6 @@ After setup, skills are available as `/` slash commands in all Kiro workspaces.
 | `finishing-a-development-branch` | When implementation is complete, deciding merge/PR/cleanup |
 | `dispatching-parallel-agents` | When facing 2+ independent tasks |
 | `writing-skills` | When creating or editing skills |
-
 
 ## Using Superpowers
 

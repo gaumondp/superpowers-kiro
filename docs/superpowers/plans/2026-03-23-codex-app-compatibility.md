@@ -27,6 +27,7 @@
 ### Task 1: Add Step 0 to `using-git-worktrees`
 
 **Files:**
+
 - Modify: `skills/using-git-worktrees/SKILL.md:14-15` (insert after Overview, before Directory Selection Process)
 
 - [ ] **Step 1: Read the current skill file**
@@ -61,7 +62,8 @@ After reporting, STOP. Do not continue to Directory Selection or Creation Steps.
 **If `GIT_DIR` equals `GIT_COMMON`:** Proceed with the full worktree creation flow below.
 
 **Sandbox fallback:** If you proceed to Creation Steps but `git worktree add -b` fails with a permission error (e.g., "Operation not permitted"), treat this as a late-detected restricted environment. Fall back to the behavior above — run setup and baseline tests in the current directory, report accordingly, and STOP.
-```
+
+```text
 
 - [ ] **Step 3: Verify the insertion**
 
@@ -85,6 +87,7 @@ sandbox fallback for permission errors on git worktree add."
 ### Task 2: Update `using-git-worktrees` Integration section
 
 **Files:**
+
 - Modify: `skills/using-git-worktrees/SKILL.md:211-215` (Integration > Called by)
 
 - [ ] **Step 1: Update the three "Called by" entries**
@@ -123,6 +126,7 @@ Clarify that skill ensures a workspace exists, not that it always creates one."
 ### Task 3: Add Step 1.5 to `finishing-a-development-branch`
 
 **Files:**
+
 - Modify: `skills/finishing-a-development-branch/SKILL.md:38` (insert after Step 1, before Step 2)
 
 - [ ] **Step 1: Read the current skill file**
@@ -148,7 +152,7 @@ First, ensure all work is staged and committed (`git add` + `git commit`).
 
 Then present this to the user (do NOT present the 4-option menu):
 
-```
+```text
 Implementation complete. All tests passing.
 Current HEAD: <full-commit-sha>
 
@@ -177,7 +181,8 @@ Proceed to Step 2 and present the 4-option menu as normal.
 **Path C — `GIT_DIR` equals `GIT_COMMON` (normal environment):**
 
 Proceed to Step 2 and present the 4-option menu as normal.
-```
+
+```text
 
 - [ ] **Step 3: Verify the insertion**
 
@@ -202,6 +207,7 @@ payload instead of 4-option menu. Includes commit SHA and data loss warning."
 ### Task 4: Add Step 5 cleanup guard to `finishing-a-development-branch`
 
 **Files:**
+
 - Modify: `skills/finishing-a-development-branch/SKILL.md` (Step 5: Cleanup Worktree — find by section heading, line numbers will have shifted after Task 3)
 
 - [ ] **Step 1: Read the current Step 5 section**
@@ -219,12 +225,14 @@ git worktree list | grep $(git branch --show-current)
 ```
 
 If yes:
+
 ```bash
 git worktree remove <worktree-path>
 ```
 
 **For Option 3:** Keep worktree.
-```
+
+```text
 
 - [ ] **Step 2: Add the cleanup guard before existing logic**
 
@@ -245,17 +253,20 @@ If `GIT_DIR` differs from `GIT_COMMON`: skip worktree removal — the host envir
 **Otherwise, for Options 1 and 4:**
 
 Check if in worktree:
+
 ```bash
 git worktree list | grep $(git branch --show-current)
 ```
 
 If yes:
+
 ```bash
 git worktree remove <worktree-path>
 ```
 
 **For Option 3:** Keep worktree.
-```
+
+```text
 
 Note: the original text said "For Options 1, 2, 4" but the Quick Reference table and Common Mistakes section say "Options 1 & 4 only." This edit aligns Step 5 with those sections.
 
@@ -282,28 +293,35 @@ Options 1 and 4 only, matching Quick Reference and Common Mistakes."
 ### Task 5: Update Integration lines in `subagent-driven-development` and `executing-plans`
 
 **Files:**
+
 - Modify: `skills/subagent-driven-development/SKILL.md:268`
 - Modify: `skills/executing-plans/SKILL.md:68`
 
 - [ ] **Step 1: Update `subagent-driven-development`**
 
 Change line 268 from:
-```
+
+```text
 - **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 ```
+
 To:
-```
+
+```text
 - **superpowers:using-git-worktrees** - REQUIRED: Ensures isolated workspace (creates one or verifies existing)
 ```
 
 - [ ] **Step 2: Update `executing-plans`**
 
 Change line 68 from:
-```
+
+```text
 - **superpowers:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 ```
+
 To:
-```
+
+```text
 - **superpowers:using-git-worktrees** - REQUIRED: Ensures isolated workspace (creates one or verifies existing)
 ```
 
@@ -326,6 +344,7 @@ always creating one."
 ### Task 6: Add environment detection docs to `codex-tools.md`
 
 **Files:**
+
 - Modify: `skills/using-superpowers/references/codex-tools.md:25` (append at end)
 
 - [ ] **Step 1: Read the current file**
@@ -366,7 +385,8 @@ the user to use the App's native controls:
 
 The agent can still run tests, stage files, and output suggested branch
 names, commit messages, and PR descriptions for the user to copy.
-```
+
+```text
 
 - [ ] **Step 3: Verify the additions**
 
@@ -390,6 +410,7 @@ App's native finishing flow for skills that need to adapt."
 ### Task 7: Automated test — environment detection
 
 **Files:**
+
 - Create: `tests/codex-app-compat/test-environment-detection.sh`
 
 - [ ] **Step 1: Create test directory**
@@ -523,6 +544,7 @@ worktree, detached HEAD, and cleanup guard scenarios."
 ### Task 8: Final verification
 
 **Files:**
+
 - Read: all 5 modified skill files
 
 - [ ] **Step 1: Run the automated detection tests**
@@ -536,6 +558,7 @@ Expected: 6 passed, 0 failed.
 - [ ] **Step 2: Read each modified file and verify changes**
 
 Read each file end-to-end:
+
 - `skills/using-git-worktrees/SKILL.md` — Step 0 present, rest unchanged
 - `skills/finishing-a-development-branch/SKILL.md` — Step 1.5 present, cleanup guard present, rest unchanged
 - `skills/subagent-driven-development/SKILL.md` — line 268 updated
@@ -553,6 +576,7 @@ Should show exactly 6 files changed (5 skill files + 1 test file). No other file
 - [ ] **Step 4: Run existing test suite**
 
 If test runner exists:
+
 ```bash
 # Run skill-triggering tests
 ./tests/skill-triggering/run-all.sh 2>/dev/null || echo "Skill triggering tests not available in this environment"

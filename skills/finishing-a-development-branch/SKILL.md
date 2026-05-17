@@ -25,7 +25,8 @@ npm test / cargo test / pytest / go test ./...
 ```
 
 **If tests fail:**
-```
+
+```text
 Tests failing (<N> failures). Must fix before completing:
 
 [Show failures]
@@ -67,7 +68,7 @@ Or ask: "This branch split from main - is that correct?"
 
 **Normal repo and named-branch worktree — present exactly these 4 options:**
 
-```
+```text
 Implementation complete. What would you like to do?
 
 1. Merge back to <base-branch> locally
@@ -80,7 +81,7 @@ Which option?
 
 **Detached HEAD — present exactly these 3 options:**
 
-```
+```text
 Implementation complete. You're on a detached HEAD (externally managed workspace).
 
 1. Push as new branch and create a Pull Request
@@ -146,7 +147,8 @@ Report: "Keeping branch <name>. Worktree preserved at <path>."
 #### Option 4: Discard
 
 **Confirm first:**
-```
+
+```text
 This will permanently delete:
 - Branch <name>
 - All commits: <commit-list>
@@ -158,12 +160,14 @@ Type 'discard' to confirm.
 Wait for exact confirmation.
 
 If confirmed:
+
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
 ```
 
 Then: Cleanup worktree (Step 6), then force-delete branch:
+
 ```bash
 git branch -D <feature-branch>
 ```
@@ -202,37 +206,45 @@ git worktree prune  # Self-healing: clean up any stale registrations
 
 ## Common Mistakes
 
-**Skipping test verification**
+### Skipping test verification
+
 - **Problem:** Merge broken code, create failing PR
 - **Fix:** Always verify tests before offering options
 
-**Open-ended questions**
+### Open-ended questions
+
 - **Problem:** "What should I do next?" is ambiguous
 - **Fix:** Present exactly 4 structured options (or 3 for detached HEAD)
 
-**Cleaning up worktree for Option 2**
+### Cleaning up worktree for Option 2
+
 - **Problem:** Remove worktree user needs for PR iteration
 - **Fix:** Only cleanup for Options 1 and 4
 
-**Deleting branch before removing worktree**
+### Deleting branch before removing worktree
+
 - **Problem:** `git branch -d` fails because worktree still references the branch
 - **Fix:** Merge first, remove worktree, then delete branch
 
-**Running git worktree remove from inside the worktree**
+### Running git worktree remove from inside the worktree
+
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
 - **Fix:** Always `cd` to main repo root before `git worktree remove`
 
-**Cleaning up harness-owned worktrees**
+### Cleaning up harness-owned worktrees
+
 - **Problem:** Removing a worktree the harness created causes phantom state
 - **Fix:** Only clean up worktrees under `.worktrees/`, `worktrees/`, or `~/.config/superpowers/worktrees/`
 
-**No confirmation for discard**
+### No confirmation for discard
+
 - **Problem:** Accidentally delete work
 - **Fix:** Require typed "discard" confirmation
 
 ## Red Flags
 
 **Never:**
+
 - Proceed with failing tests
 - Merge without verifying tests on result
 - Delete work without confirmation
@@ -242,6 +254,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - Run `git worktree remove` from inside the worktree
 
 **Always:**
+
 - Verify tests before offering options
 - Detect environment before presenting menu
 - Present exactly 4 options (or 3 for detached HEAD)

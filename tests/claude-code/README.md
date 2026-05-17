@@ -13,27 +13,32 @@ This test suite verifies that skills are loaded correctly and Claude follows the
 
 ## Running Tests
 
-### Run all fast tests (recommended):
+### Run all fast tests (recommended)
+
 ```bash
 ./run-skill-tests.sh
 ```
 
-### Run integration tests (slow, 10-30 minutes):
+### Run integration tests (slow, 10-30 minutes)
+
 ```bash
 ./run-skill-tests.sh --integration
 ```
 
-### Run specific test:
+### Run specific test
+
 ```bash
 ./run-skill-tests.sh --test test-subagent-driven-development.sh
 ```
 
-### Run with verbose output:
+### Run with verbose output
+
 ```bash
 ./run-skill-tests.sh --verbose
 ```
 
-### Set custom timeout:
+### Set custom timeout
+
 ```bash
 ./run-skill-tests.sh --timeout 1800  # 30 minutes for integration tests
 ```
@@ -41,7 +46,9 @@ This test suite verifies that skills are loaded correctly and Claude follows the
 ## Test Structure
 
 ### test-helpers.sh
+
 Common functions for skills testing:
+
 - `run_claude "prompt" [timeout]` - Run Claude with prompt
 - `assert_contains output pattern name` - Verify pattern exists
 - `assert_not_contains output pattern name` - Verify pattern absent
@@ -53,6 +60,7 @@ Common functions for skills testing:
 ### Test Files
 
 Each test file:
+
 1. Sources `test-helpers.sh`
 2. Runs Claude Code with specific prompts
 3. Verifies expected behavior using assertions
@@ -83,7 +91,9 @@ echo "=== All tests passed ==="
 ### Fast Tests (run by default)
 
 #### test-subagent-driven-development.sh
+
 Tests skill content and requirements (~2 minutes):
+
 - Skill loading and accessibility
 - Workflow ordering (spec compliance before code quality)
 - Self-review requirements documented
@@ -95,7 +105,9 @@ Tests skill content and requirements (~2 minutes):
 ### Integration Tests (use --integration flag)
 
 #### test-subagent-driven-development-integration.sh
+
 Full workflow execution test (~10-30 minutes):
+
 - Creates real test project with Node.js setup
 - Creates implementation plan with 2 tasks
 - Executes plan using subagent-driven-development
@@ -110,19 +122,23 @@ Full workflow execution test (~10-30 minutes):
   - Proper git commits created
 
 **What it tests:**
+
 - The workflow actually works end-to-end
 - Our improvements are actually applied
 - Subagents follow the skill correctly
 - Final code is functional and tested
 
 #### test-requesting-code-review.sh
+
 Behavioral test for the code reviewer subagent (~5 minutes):
+
 - Builds a tiny project with a baseline commit
 - Adds a second commit that plants two real bugs (SQL injection, plaintext password handling)
 - Dispatches the code reviewer via the requesting-code-review skill
 - Verifies the reviewer flags the planted bugs at Critical/Important severity and refuses to approve
 
 **What it tests:**
+
 - The skill actually dispatches a working code reviewer subagent
 - The reviewer template produces reviewers that catch obvious security bugs
 - The reviewer is not sycophantic — it does not approve a diff with planted Critical issues
@@ -145,6 +161,7 @@ Behavioral test for the code reviewer subagent (~5 minutes):
 ## Debugging Failed Tests
 
 With `--verbose`, you'll see full Claude output:
+
 ```bash
 ./run-skill-tests.sh --verbose --test test-subagent-driven-development.sh
 ```
@@ -154,6 +171,7 @@ Without verbose, only failures show output.
 ## CI/CD Integration
 
 To run in CI:
+
 ```bash
 # Run with explicit timeout for CI environments
 ./run-skill-tests.sh --timeout 900

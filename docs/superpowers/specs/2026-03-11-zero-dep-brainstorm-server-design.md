@@ -20,6 +20,7 @@ Implements RFC 6455 for text frames only:
 **Handshake:** Compute `Sec-WebSocket-Accept` from client's `Sec-WebSocket-Key` using SHA-1 + the RFC 6455 magic GUID. Return 101 Switching Protocols.
 
 **Frame decoding (client to server):** Handle three masked length encodings:
+
 - Small: payload < 126 bytes
 - Medium: 126-65535 bytes (16-bit extended)
 - Large: > 65535 bytes (64-bit extended)

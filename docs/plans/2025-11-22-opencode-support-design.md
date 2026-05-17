@@ -129,6 +129,7 @@ When a new session starts (`session.started` event):
    - Include skill directories for each
 
 3. **Inject tool mapping instructions**
+
    ```markdown
    **Tool Mapping for OpenCode:**
    When skills reference tools you don't have, substitute:
@@ -197,7 +198,7 @@ export const SuperpowersPlugin = async ({ client, directory, $ }) => {
 
 ## File Structure
 
-```
+```text
 superpowers/
 ├── lib/
 │   └── skills-core.js           # NEW: Shared skill logic

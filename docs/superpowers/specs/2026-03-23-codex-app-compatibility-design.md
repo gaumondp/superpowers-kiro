@@ -24,6 +24,7 @@ Tested in the Codex App on 2026-03-23:
 | `git status/diff/log` | Works | Works |
 
 Additional findings:
+
 - `spawn_agent` subagents **share** the parent thread's filesystem (confirmed via marker file test)
 - "Create branch" button appears in the App header regardless of which branch the worktree was started from
 - The App's native finishing flow: Create branch → Commit modal → Commit and push / Commit and create PR
@@ -45,6 +46,7 @@ Two signals derived:
 - **ON_DETACHED_HEAD:** `BRANCH` is empty — no named branch exists
 
 Why `git-dir != git-common-dir` instead of checking `show-toplevel`:
+
 - In a normal repo, both resolve to the same `.git` directory
 - In a linked worktree, `git-dir` is `.git/worktrees/<name>` while `git-common-dir` is `.git`
 - In a submodule, both are equal — avoiding a false positive that `show-toplevel` would produce
@@ -65,9 +67,10 @@ Why `git-dir != git-common-dir` instead of checking `show-toplevel`:
 
 New section between "Overview" and "Directory Selection Process":
 
-**Step 0: Check if Already in an Isolated Workspace**
+#### Step 0: Check if Already in an Isolated Workspace
 
 Run the detection commands. If `GIT_DIR != GIT_COMMON`, skip worktree creation entirely. Instead:
+
 1. Skip to "Run Project Setup" subsection under Creation Steps — `npm install` etc. is idempotent, worth running for safety
 2. Then "Verify Clean Baseline" — run tests
 3. Report with branch state:
@@ -101,7 +104,7 @@ First, ensure all work is staged and committed (`git add` + `git commit`). The C
 
 Then present this to the user (do NOT present the 4-option menu):
 
-```
+```text
 Implementation complete. All tests passing.
 Current HEAD: <full-commit-sha>
 
@@ -142,11 +145,14 @@ Otherwise, check and remove as today. Note: the existing Step 5 text says "For O
 ### 3. `subagent-driven-development/SKILL.md` and `executing-plans/SKILL.md` — 1 line edit each
 
 Both skills have an identical Integration section line. Change from:
-```
+
+```text
 - superpowers:using-git-worktrees - REQUIRED: Set up isolated workspace before starting
 ```
+
 To:
-```
+
+```text
 - superpowers:using-git-worktrees - REQUIRED: Ensures isolated workspace (creates one or verifies existing)
 ```
 
